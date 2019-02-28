@@ -49,6 +49,8 @@
         "typeinfo": "cpp",
         "utility": "cpp",
         "vector": "cpp",
-        "__split_buffer": "cpp"
+        "__split_buffer": "cpp",
+        "__tree": "cpp",
+        "set": "cpp"
     }
 }
