@@ -6,7 +6,7 @@ char getSum(char first, char second, int& carry)
     char result;
     if (first == second) {
         result = carry == 1 ? '1' : '0';
-        carry = first == '1' || second == '1' ? 1 : 0;
+        carry = first == '1' && second == '1' ? 1 : 0;
     } else {
         result = carry == 1 ? '0' : '1';
     }
@@ -15,7 +15,7 @@ char getSum(char first, char second, int& carry)
 
 void deleteLeadingZeros(std::string& string)
 {
-    while (string[0] == '0') {
+    while (string[0] == '0' && string.length() > 1) {
         string.erase(0, 1);
     }
 }
@@ -54,7 +54,7 @@ int main()
             result.insert(0, 1, '1');
         }
         deleteLeadingZeros(result);
-        std::cout << i << ' ' << result << std::endl;
+        std::cout << i << " " << result << std::endl;
     }
     return 0;
 }
