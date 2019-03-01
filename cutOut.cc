@@ -1,4 +1,3 @@
-#include <algorithm>
 #include <iostream>
 #include <map>
 #include <vector>
@@ -15,13 +14,13 @@ int main()
     std::ios_base::sync_with_stdio(false);
     std::cin.tie(NULL);
 
-    long arraySize, subArraySize, temp;
-    std::vector<long> subArray;
-    std::map<long, long> mappedElements;
+    int arraySize, subArraySize, temp;
+    std::vector<int> subArray;
+    std::map<int, int> mappedElements;
 
     std::cin >> arraySize >> subArraySize;
-    long arrayRepeats = arraySize / subArraySize;
-    for (long i = 0; i < arraySize; i++) {
+    int arrayRepeats = arraySize / subArraySize;
+    for (int i = 0; i < arraySize; i++) {
         std::cin >> temp;
         if (mappedElements.count(temp) > 0) {
             mappedElements[temp] = mappedElements[temp] + 1;
@@ -31,10 +30,10 @@ int main()
     }
     while (subArray.size() < subArraySize) {
         subArray.clear();
-        for (auto i = mappedElements.begin(); i != mappedElements.end(); i++) {
-            long numberToAdd = i->first;
-            long ocurrances = i->second;
-            for (long k = 0; k < ocurrances / arrayRepeats && subArray.size() < subArraySize; k++) {
+        for (auto i = mappedElements.begin(); i != mappedElements.end() && subArray.size() < subArraySize; i++) {
+            int numberToAdd = i->first;
+            int ocurrances = i->second;
+            for (int k = 0; k < ocurrances / arrayRepeats && subArray.size() < subArraySize; k++) {
                 subArray.push_back(numberToAdd);
             }
         }
