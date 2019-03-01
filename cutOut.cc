@@ -3,7 +3,7 @@
 #include <map>
 #include <vector>
 
-void printPairVector(std::vector<std::pair<int, int>> vec)
+void printPairVector(std::map<long, long> vec)
 {
     for (auto i = vec.begin(); i != vec.end(); i++) {
         std::cout << "{" << i->first << "," << i->second << "}" << std::endl;
@@ -15,13 +15,13 @@ int main()
     std::ios_base::sync_with_stdio(false);
     std::cin.tie(NULL);
 
-    int arraySize, subArraySize, temp;
-    std::vector<int> subArray;
-    std::map<int, int> mappedElements;
+    long arraySize, subArraySize, temp;
+    std::vector<long> subArray;
+    std::map<long, long> mappedElements;
 
     std::cin >> arraySize >> subArraySize;
-    int arrayRepeats = arraySize / subArraySize;
-    for (int i = 0; i < arraySize; i++) {
+    long arrayRepeats = arraySize / subArraySize;
+    for (long i = 0; i < arraySize; i++) {
         std::cin >> temp;
         if (mappedElements.count(temp) > 0) {
             mappedElements[temp] = mappedElements[temp] + 1;
@@ -29,24 +29,22 @@ int main()
             mappedElements[temp] = 1;
         }
     }
-    std::vector<std::pair<int, int>> vec;
-    //Inserting all the values in the map to a vector.
-    std::copy(mappedElements.begin(), mappedElements.end(), std::back_inserter<std::vector<std::pair<int, int>>>(vec));
-    //Sorting the values inside the vector.
-    std::sort(vec.begin(), vec.end(), [](const std::pair<int, int>& l, const std::pair<int, int>& r) { if (l.second != r.second ) {return l.second < r.second; } return l.first < r.first; });
-    auto i = vec.rbegin();
     while (subArray.size() < subArraySize) {
-        int numberToAdd = i->first;
-        int ocurrances = i->second;
-        for (int k = 0; k < ocurrances / arrayRepeats; k++) {
-            subArray.push_back(numberToAdd);
+        subArray.clear();
+        for (auto i = mappedElements.begin(); i != mappedElements.end(); i++) {
+            long numberToAdd = i->first;
+            long ocurrances = i->second;
+            for (long k = 0; k < ocurrances / arrayRepeats && subArray.size() < subArraySize; k++) {
+                subArray.push_back(numberToAdd);
+            }
         }
-        //std::cout << numberToAdd << " Can occure " << ocurrances / arrayRepeats << " times" << std::endl;
-        i++;
+        arrayRepeats--;
     }
-
-    for (auto j = subArray.begin(); j != subArray.end(); j++) {
-        std::cout << *j << " ";
+    for (int i = 0; i < subArray.size(); i++) {
+        std::cout << subArray[i];
+        if (i != subArray.size() - 1) {
+            std::cout << " ";
+        }
     }
     std::cout << std::endl;
 }
