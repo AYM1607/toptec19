@@ -1,10 +1,9 @@
 #include <iostream>
 #include <set>
+#include <unordered_map>
 #include <vector>
 
-std::set<long> found;
-
-void printVector(std::vector<long> vec)
+void printVector(std::vector<long long> vec)
 {
     for (auto i = vec.begin(); i != vec.end(); i++) {
         std::cout << *i << " ";
@@ -12,17 +11,7 @@ void printVector(std::vector<long> vec)
     std::cout << std::endl;
 }
 
-bool isVectorNice(std::vector<long> vec, long sum)
-{
-    for (auto i = vec.begin(); i != vec.end(); i++) {
-        if (sum - *i == *i) {
-            return true;
-        }
-    }
-    return false;
-}
-
-long vectorSum(std::vector<long> vec)
+long vectorSum(std::vector<long long> vec)
 {
     long sum = 0;
     for (auto i = vec.begin(); i != vec.end(); i++) {
@@ -33,31 +22,44 @@ long vectorSum(std::vector<long> vec)
 
 int main()
 {
-    std::ios_base::sync_with_stdio(false);
-    std::cin.tie(NULL);
-    bool resultFlag = false;
-    long arraySize, temp, sum, index = 0;
-    std::vector<long> vec;
-    std::vector<long> niceIndexes;
+    //bool resultFlag = false;
+    long long arraySize, temp, sum, max = -1, maxIndex = 0, seMax = -1;
+    std::vector<long long> vec;
+    std::vector<long long> niceIndexes;
     std::cin >> arraySize;
-    for (int i = 0; i < arraySize; i++) {
+    for (long long i = 0; i < arraySize; i++) {
         std::cin >> temp;
         vec.push_back(temp);
     }
     sum = vectorSum(vec);
-    for (auto i = vec.begin(); i != vec.end(); i++, index++) {
-        temp = *i;
-        if (found.count(temp) != 0) {
-            niceIndexes.push_back(index + 1);
+
+    for (long long i = 0; i < arraySize; i++) {
+        if (vec[i] > max) {
+            max = vec[i];
+            maxIndex = i;
+        }
+    }
+    for (long long i = 0; i < arraySize; i++) {
+        if (i == maxIndex) {
             continue;
         }
-        vec.erase(i);
-        if (isVectorNice(vec, sum - temp)) {
-            found.insert(temp);
-            niceIndexes.push_back(index + 1);
+        if (vec[i] > seMax) {
+            seMax = vec[i];
         }
-        vec.insert(i, temp);
     }
+
+    for (long long i = 0; i < arraySize; i++) {
+        if (i == maxIndex) {
+            if (sum - seMax - vec[i] == seMax) {
+                niceIndexes.push_back(i + 1);
+            }
+        } else {
+            if (sum - max - vec[i] == max) {
+                niceIndexes.push_back(i + 1);
+            }
+        }
+    }
+
     if (niceIndexes.empty()) {
         std::cout << 0 << std::endl;
     } else {
