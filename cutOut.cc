@@ -28,6 +28,18 @@ int main()
             mappedElements[temp] = 1;
         }
     }
+    if (subArraySize == 1) {
+        long long MAX = -1;
+        long long MAXINDEX = mappedElements.begin()->first;
+        for (auto i = mappedElements.begin(); i != mappedElements.end(); i++) {
+            if (i->second > MAX) {
+                MAX = i->second;
+                MAXINDEX = i->first;
+            }
+        }
+        std::cout << MAXINDEX << std::endl;
+        return 0;
+    }
     while (subArray.size() < subArraySize) {
         subArray.clear();
         for (auto i = mappedElements.begin(); i != mappedElements.end() && subArray.size() < subArraySize; i++) {
